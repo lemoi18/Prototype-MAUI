@@ -9,6 +9,10 @@ namespace MauiApp8.Services
 
         string[] Scopes { get; set; }
         Task<string> AuthenticateAsync();
+
+        Task<List<string>> GetUserInfo(string accessToken);
+        
+
         Task SignOutAsync();
 
     }

@@ -30,8 +30,14 @@
         <Button 
                 Text="Login with Google"
                 FontAttributes="Bold"
-                Command="{Binding NavigateToGoogle}"
+                Command="{Binding NavigateToGoogleCommand}"
                 HorizontalOptions="Center" />
+
+        <Label 
+            Text="Binding User.Email"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center" />
+
 
 
 

@@ -1,13 +1,20 @@
-﻿using CommunityToolkit.Mvvm.Input;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using MauiApp8.Model;
 using MauiApp8.Services;
 using MauiApp8.Views;
 
 namespace MauiApp8.ViewModel
 {
-    public partial class LoginPageModel
+    
+    public partial class LoginPageModel:ObservableObject
     {
+        [ObservableProperty]
+
+        User user;
 
         AuthService authService = new("google");
+
 
         
         [RelayCommand]
