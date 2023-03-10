@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Maui;
+using Google.Apis.Auth.OAuth2;
 using Microsoft.Extensions.Logging;
 
 
@@ -32,7 +33,6 @@ public static class MauiProgram
         builder.Services.AddSingleton<Views.SettingsPage>();
 
         builder.Services.AddSingleton<Services.AuthService>();
-
 
 
         var app = builder.Build();

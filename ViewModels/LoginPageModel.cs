@@ -1,28 +1,41 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Maui.Core;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using MauiApp8.Model;
 using MauiApp8.Services;
 using MauiApp8.Views;
+using Microsoft.Maui.Networking;
 
 namespace MauiApp8.ViewModel
 {
-    
-    public partial class LoginPageModel:ObservableObject
+
+    public partial class LoginPageModel : ObservableObject
     {
-        [ObservableProperty]
-
-        User user;
-
-        AuthService authService = new("google");
 
 
-        
+
+        private AuthService _authService;
+
+        public LoginPageModel(AuthService authService)
+        {
+            _authService = authService;
+        }
+
+        public AuthService AuthService
+        {
+            get { return _authService; }
+            set { SetProperty(ref _authService, value); }
+        }
+
+
+
         [RelayCommand]
         Task NavigateToSettings() => Shell.Current.GoToAsync(nameof(SettingsPage));
         [RelayCommand]
         Task NavigateToHome() => Shell.Current.GoToAsync(nameof(HomePage));
 
         [RelayCommand]
-        Task NavigateToGoogle() => authService.AuthenticateAsync();
+        Task NavigateToGoogle() => _authService.AuthenticateAsync();
+        
     }
 }

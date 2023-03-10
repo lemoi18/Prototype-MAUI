@@ -34,9 +34,12 @@
                 HorizontalOptions="Center" />
 
         <Label 
-            Text="Binding User.Email"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
+    Text="{Binding AuthService.User.Name}"
+    VerticalOptions="Center" 
+    HorizontalOptions="Center" 
+    BindingContext="{Binding AuthService}"
+/>
+
 
 
 
