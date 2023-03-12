@@ -34,11 +34,10 @@
                 HorizontalOptions="Center" />
 
         <Label 
-    Text="{Binding AuthService.User.Name}"
+    Text="{Binding User.Name}"
     VerticalOptions="Center" 
-    HorizontalOptions="Center" 
-    BindingContext="{Binding AuthService}"
-/>
+    HorizontalOptions="Center" />
+
 
 
 

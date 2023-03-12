@@ -166,6 +166,8 @@ namespace MauiApp8.Services
                 }
                 else
                 {
+                    User.Name = "No user";
+
                     return User;
                 }
                
@@ -173,7 +175,7 @@ namespace MauiApp8.Services
             catch (TaskCanceledException e)
             {
 
-
+                User.Name = "TaskCanceled";
                 return User;
 
 
