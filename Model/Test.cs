@@ -24,5 +24,7 @@ namespace MauiApp8.Model
 
         [JsonPropertyName("picture")]
         public string PictureUrl { get; set; }
+
+        public bool LoginSuccessful { get; set; }
     }
 }

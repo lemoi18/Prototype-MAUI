@@ -1,4 +1,5 @@
-﻿
+﻿using MauiApp8.Model;
+
 
 namespace MauiApp8.Services
 {
@@ -6,12 +7,12 @@ namespace MauiApp8.Services
     {
 
 
+        Test User { get; set; }
 
-        string[] Scopes { get; set; }
-        Task<string> AuthenticateAsync();
+        Task<Test> AuthenticateAsync();
 
-        Task<List<string>> GetUserInfo(string accessToken);
-        
+        //Task<Test> GetUserInfo(string accessToken);
+
 
         Task SignOutAsync();
 

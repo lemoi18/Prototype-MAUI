@@ -4,6 +4,7 @@ using CommunityToolkit.Mvvm.Input;
 using MauiApp8.Model;
 using MauiApp8.Services;
 using MauiApp8.Views;
+using MauiApp8.Helpers;
 using Microsoft.Maui.Networking;
 
 namespace MauiApp8.ViewModel
@@ -14,7 +15,7 @@ namespace MauiApp8.ViewModel
 
 
 
-        private  AuthService _authService;
+        IAuthenticationService _authService;
         public Test User
         {
             get => _user;
@@ -23,16 +24,15 @@ namespace MauiApp8.ViewModel
 
 
         private Test _user;
-        public LoginPageModel(AuthService authService)
+        public LoginPageModel(IAuthenticationService authService)
         {
-            _authService = authService;
+
+            this._authService = authService;
+
+           
         }
 
-        public AuthService AuthService
-        {
-            get { return _authService; }
-            set { SetProperty(ref _authService, value); }
-        }
+        
 
 
 
@@ -46,25 +46,15 @@ namespace MauiApp8.ViewModel
         async Task NavigateToGoogle()
         {
             User = await _authService.AuthenticateAsync();
-
-            await Login();
-        }
-
-        [RelayCommand]
-        async Task Login()
-        {
-            // Simulate a successful login
-            bool isLoginSuccessful = true;
-
-            if (isLoginSuccessful)
+            _authService.User = User;
+            if (User.LoginSuccessful)
             {
-                // Navigate to the Home page using Shell navigation
-                await Shell.Current.GoToAsync(nameof(HomePage));
-
-                // Remove all pages from the navigation stack except for the root page
-                await Shell.Current.Navigation.PopToRootAsync();
+                Application.Current.MainPage = new AppShell();
             }
+            
         }
+
+        
 
     }
 

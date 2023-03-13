@@ -14,18 +14,7 @@
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
 
-        <Button 
-                Text="Navigate to Home"
-                FontAttributes="Bold"
-                Command="{Binding NavigateToHomeCommand}"
-                HorizontalOptions="Center" />
-
-
-        <Button 
-                Text="Navigate to settings"
-                FontAttributes="Bold"
-                Command="{Binding NavigateToSettingsCommand}"
-                HorizontalOptions="Center" />
+        
 
         <Button 
                 Text="Login with Google"
@@ -33,10 +22,7 @@
                 Command="{Binding NavigateToGoogleCommand}"
                 HorizontalOptions="Center" />
 
-        <Label 
-    Text="{Binding User.Name}"
-    VerticalOptions="Center" 
-    HorizontalOptions="Center" />
+        
 
 
 

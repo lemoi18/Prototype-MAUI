@@ -17,10 +17,11 @@ using System.IdentityModel.Tokens.Jwt;
 using Google.Apis.Auth.OAuth2.Responses;
 using Google.Apis.Oauth2.v2;
 using CommunityToolkit.Mvvm.ComponentModel;
+using Microsoft.IdentityModel.Tokens;
 
 namespace MauiApp8.Services
 {
-    public class AuthService : ObservableObject
+    public class AuthService : ObservableObject, IAuthenticationService
     {
         public AuthService()
         {
@@ -48,7 +49,6 @@ namespace MauiApp8.Services
 
         public Test User { get; set; }
 
-        public WebAuthenticatorOptions webAuthenticatorOptions { get; set; }
 
         public string[] Scopes { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
@@ -59,39 +59,52 @@ namespace MauiApp8.Services
 
         public async Task<Test> GetUserInfo(string accessToken)
         {
-            try
-            {
+            
+            
 
                 // Verify the access token using the Google API client library
-                var payload = await GoogleJsonWebSignature.ValidateAsync(accessToken);
+                //var payload = await GoogleJsonWebSignature.ValidateAsync(accessToken);
 
                 var handler = new JwtSecurityTokenHandler();
-                var token = handler.ReadJwtToken(accessToken);
+                try
+                {
+                    var token = handler.ReadJwtToken(accessToken);
 
 
-                // Extract the email claim
-                string email = token.Claims.FirstOrDefault(c => c.Type == "email")?.Value;
+                    // Extract the email claim
+                    string email = token.Claims.FirstOrDefault(c => c.Type == "email")?.Value;
+                    string name = token.Claims.FirstOrDefault(c => c.Type == "name")?.Value;
+                    string givenName = token.Claims.FirstOrDefault(c => c.Type == "given_name")?.Value;
+                    string picture = token.Claims.FirstOrDefault(c => c.Type == "picture")?.Value;
+                    string FamilyName = token.Claims.FirstOrDefault(c => c.Type == "family_name")?.Value;
 
 
-                // Retrieve the user's name from the payload and return it
+                    // Retrieve the user's name from the payload and return it
 
 
-                Test user = new Test();
+                    Test user = new Test();
 
-                user.Email = payload.Email;
-                user.Name = payload.Name;
-                user.GivenName = payload.GivenName;
-                user.FamilyName = payload.FamilyName;
-                user.PictureUrl = payload.Picture;
+                    user.Email = email;
+                    user.Name = name;
+                    user.GivenName = givenName;
+                    user.FamilyName = FamilyName;
+                    user.PictureUrl = picture;
+                    user.LoginSuccessful = true;
 
-                return user;
+                    return  user;
 
+                }
+                catch (SecurityTokenException ex)
+                {
+
+                Console.WriteLine($"Token validation error: {ex.Message}");
+                 User.LoginSuccessful= false;
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error getting user name: {ex.Message}");
-                return null;
-            }
+
+
+
+            return null;
+
         }
 
 
@@ -100,34 +113,20 @@ namespace MauiApp8.Services
         {
             var scheme = "Google"; // Apple, Microsoft, Google, Facebook, etc.
             var authUrlRoot = "https://accounts.google.com/o/oauth2/auth";
-            var client_id = "438312542461-555tgjs158r5jrj1vmvgfvrlccblg89a.apps.googleusercontent.com";
             WebAuthenticatorResult result = null;
             
 
-            if (scheme.Equals("Apple")
-                && DeviceInfo.Platform == DevicePlatform.iOS
-                && DeviceInfo.Version.Major >= 13)
-            {
-                // Use Native Apple Sign In API's
-                result = await AppleSignInAuthenticator.AuthenticateAsync();
-            }
-            else
-            {
+           
                 // Web Authentication flow
                 var authUrl = new Uri($"{this.auth_url}{scheme}");
                 var callbackUrl = new Uri("com.companyname.mauiapp8://");
 
                 var extra = new KeyValuePair<string, string>("client_id", this.client_id);
 
-
                 result = await WebAuthenticator.Default.AuthenticateAsync(authUrl, callbackUrl);
-            }
-
 
             try
             {
-
-
 
                 var codeToken = result.Properties["code"];
 
@@ -135,7 +134,7 @@ namespace MauiApp8.Services
                 {
                         new KeyValuePair<string,string>("grant_type","authorization_code"),
                         new KeyValuePair<string,string>("client_id",this.client_id),
-                        new KeyValuePair<string,string>("redirect_uri",callback_url),
+                        new KeyValuePair<string,string>("redirect_uri",this.callback_url),
                         new KeyValuePair<string,string>("code",codeToken),
                     });
 
@@ -152,21 +151,14 @@ namespace MauiApp8.Services
 
 
 
-
                     var data = await accessTokenResponse.Content.ReadAsStringAsync();
                     loginResponse = JsonSerializer.Deserialize<LoginRespons>(data);
-                    loginResponse.ToString();
-
-
-
-
-                    
-
                     return await GetUserInfo(loginResponse.id_token); 
                 }
                 else
                 {
                     User.Name = "No user";
+                    User.LoginSuccessful = false;
 
                     return User;
                 }
@@ -175,7 +167,8 @@ namespace MauiApp8.Services
             catch (TaskCanceledException e)
             {
 
-                User.Name = "TaskCanceled";
+                User.Name = "TaskCanceled "+e;
+                User.LoginSuccessful = false;
                 return User;
 
 

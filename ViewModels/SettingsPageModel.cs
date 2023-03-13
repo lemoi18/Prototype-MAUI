@@ -8,5 +8,10 @@ namespace MauiApp8.ViewModel
 
         [RelayCommand]
         Task NavigateBack() => Shell.Current.GoToAsync("..");
+        [RelayCommand]
+        async Task<Page> SignOut()
+        {
+            return Application.Current.MainPage = new LoginShell();
+        }
     }
 }
