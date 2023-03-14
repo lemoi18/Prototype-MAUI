@@ -16,7 +16,7 @@ namespace MauiApp8.ViewModel
 
 
         IAuthenticationService _authService;
-        private Test _user;
+        private Account _user;
 
 
         public LoginPageModel(IAuthenticationService authService)
@@ -27,7 +27,7 @@ namespace MauiApp8.ViewModel
 
         }
 
-        public Test User
+        public Account User
         {
             get => _user;
             set => SetProperty(ref _user, value);

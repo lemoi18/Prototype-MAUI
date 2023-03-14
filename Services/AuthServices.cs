@@ -47,7 +47,7 @@ namespace MauiApp8.Services
         public string auth_url { get; set; }
         public string callback_url { get; set; }
 
-        public Test User { get; set; }
+        public Account User { get; set; }
 
 
         public string[] Scopes { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
@@ -57,7 +57,7 @@ namespace MauiApp8.Services
 
 
 
-        public async Task<Test> GetUserInfo(string accessToken)
+        public async Task<Account> GetUserInfo(string accessToken)
         {
             
             
@@ -82,7 +82,7 @@ namespace MauiApp8.Services
                     // Retrieve the user's name from the payload and return it
 
 
-                    Test user = new Test();
+                    Account user = new Account();
 
                     user.Email = email;
                     user.Name = name;
@@ -109,7 +109,7 @@ namespace MauiApp8.Services
 
 
 
-        public async Task<Test> AuthenticateAsync()
+        public async Task<Account> AuthenticateAsync()
         {
             var scheme = "Google"; // Apple, Microsoft, Google, Facebook, etc.
             var authUrlRoot = "https://accounts.google.com/o/oauth2/auth";

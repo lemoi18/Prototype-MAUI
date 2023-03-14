@@ -7,9 +7,9 @@ namespace MauiApp8.Services
     {
 
 
-        Test User { get; set; }
+        Account User { get; set; }
 
-        Task<Test> AuthenticateAsync();
+        Task<Account> AuthenticateAsync();
 
         //Task<Test> GetUserInfo(string accessToken);
 

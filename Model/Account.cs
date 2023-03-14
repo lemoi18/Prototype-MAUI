@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace MauiApp8.Model
 {
-    public class Test: ObservableObject
+    public class Account: ObservableObject
     {
         [JsonPropertyName("name")]
         public string Name { get; set; }

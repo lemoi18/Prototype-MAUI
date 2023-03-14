@@ -9,8 +9,8 @@ namespace MauiApp8.ViewModel
     public partial class SettingsPageModel : ObservableObject
     {
         IAuthenticationService authService;
-        private Test _user;
-        public Test User
+        private Account _user;
+        public Account User
         {
             get => _user;
             set => SetProperty(ref _user, value);

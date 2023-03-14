@@ -16,11 +16,11 @@ namespace MauiApp8.Services
 
         public Authenticated_stub()
         {
-            User = new Test();
+            User = new Account();
         }
-        public Test User { get; set; }
+        public Account User { get; set; }
 
-        public Task<Test> AuthenticateAsync()
+        public Task<Account> AuthenticateAsync()
         {
             string email = "uia@test.no";
             string name = " Test stub";
@@ -30,7 +30,7 @@ namespace MauiApp8.Services
 
 
 
-            return Task.FromResult(new Test
+            return Task.FromResult(new Account
             {
                 Email = email,
                 Name = name,

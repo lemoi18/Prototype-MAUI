@@ -17,12 +17,12 @@ namespace MauiApp8.ViewModel
             _user = authService.User;
             // Access the CurrentUser property to get the user object
         }
-        public Test User
+        public Account User
         {
             get => _user;
             set => SetProperty(ref _user, value);
         }
-        private Test _user;
+        private Account _user;
 
         
 

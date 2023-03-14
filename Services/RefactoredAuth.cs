@@ -34,7 +34,7 @@ namespace MauiApp8.Services
         public string callback_url { get; set; }
         
 
-        public Test User { get; set; }
+        public Account User { get; set; }
 
         public RefactoredGoogleAuth()
         {
@@ -54,10 +54,10 @@ namespace MauiApp8.Services
             callback_url = "com.companyname.mauiapp8://";
 
 
-            User = new Test();
+            User = new Account();
         }
 
-        public async Task<Test> AuthenticateAsync()
+        public async Task<Account> AuthenticateAsync()
         {
             var authUrl = new Uri($"{this.auth_url}{scheme}");
             var callbackUrl = new Uri(this.callback_url);
@@ -102,7 +102,7 @@ namespace MauiApp8.Services
             
         }
 
-        private Test ValidateAccessToken(string accessToken)
+        private Account ValidateAccessToken(string accessToken)
         {
             var handler = new JwtSecurityTokenHandler();
             var token = handler.ReadJwtToken(accessToken);
@@ -112,7 +112,7 @@ namespace MauiApp8.Services
             var picture = GetTokenClaim(token, "picture");
             var familyName = GetTokenClaim(token, "family_name");
 
-            return new Test
+            return new Account
             {
                 Email = email,
                 Name = name,
