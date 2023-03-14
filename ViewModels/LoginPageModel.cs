@@ -16,6 +16,17 @@ namespace MauiApp8.ViewModel
 
 
         IAuthenticationService _authService;
+        private Test _user;
+
+
+        public LoginPageModel(IAuthenticationService authService)
+        {
+
+            this._authService = authService;
+
+
+        }
+
         public Test User
         {
             get => _user;
@@ -23,15 +34,7 @@ namespace MauiApp8.ViewModel
         }
 
 
-        private Test _user;
-        public LoginPageModel(IAuthenticationService authService)
-        {
-
-            this._authService = authService;
-
-           
-        }
-
+       
         
 
 

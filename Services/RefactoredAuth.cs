@@ -21,7 +21,7 @@ using System.Text.Json;
 
 namespace MauiApp8.Services
 {
-    public class RefactoredGoogleAuth : ObservableObject, IAuthenticationService
+    internal class RefactoredGoogleAuth : ObservableObject, IAuthenticationService
     {
         
 
@@ -88,7 +88,7 @@ namespace MauiApp8.Services
 
             try
             {
-                return await ValidateAccessToken(accessToken);
+                return ValidateAccessToken(accessToken);
             }
             catch (Exception e)
             {
@@ -99,9 +99,10 @@ namespace MauiApp8.Services
         public async Task SignOutAsync()
         {
             this.User = null;
+            
         }
 
-        private async Task<Test> ValidateAccessToken(string accessToken)
+        private Test ValidateAccessToken(string accessToken)
         {
             var handler = new JwtSecurityTokenHandler();
             var token = handler.ReadJwtToken(accessToken);

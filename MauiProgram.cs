@@ -32,7 +32,7 @@ public static class MauiProgram
         builder.Services.AddSingleton<Views.LoginPage>();
         builder.Services.AddSingleton<Views.SettingsPage>();
 
-        builder.Services.AddSingleton<Services.IAuthenticationService>((e)=> new Services.RefactoredGoogleAuth());
+        builder.Services.AddSingleton<Services.IAuthenticationService>((e)=> new Services.Authenticated_stub());
 
 
         var app = builder.Build();
