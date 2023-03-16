@@ -23,15 +23,18 @@ public static class MauiProgram
         builder.Logging.AddDebug();
 #endif
 
+        // ViewModels
         builder.Services.AddTransient<ViewModel.HomePageModel>();
         builder.Services.AddSingleton<ViewModel.SettingsPageModel>();
         builder.Services.AddSingleton<ViewModel.LoginPageModel>();
         
-
+        //Views
         builder.Services.AddTransient<Views.HomePage>();
         builder.Services.AddSingleton<Views.LoginPage>();
         builder.Services.AddSingleton<Views.SettingsPage>();
 
+
+        //Services
         builder.Services.AddSingleton<Services.IAuthenticationService>((e)=> new Services.Authenticated_stub());
 
 

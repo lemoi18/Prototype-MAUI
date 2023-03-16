@@ -11,7 +11,6 @@ namespace MauiApp8.Services
 
         Task<Account> AuthenticateAsync();
 
-        //Task<Test> GetUserInfo(string accessToken);
 
 
         Task SignOutAsync();
