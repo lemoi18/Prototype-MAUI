@@ -2,21 +2,34 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-             x:Class="MauiApp8.Views.SettingsPage"
+             x:Class="MauiApp8.Views.FoodDetailsPage"
              xmlns:viewmodel="clr-namespace:MauiApp8.ViewModel"
-             x:DataType="viewmodel:SettingsPageModel"
-             Title="Settings">
-             
+             x:DataType="viewmodel:FoodDetailsModel"
+             xmlns:model="clr-namespace:MauiApp8.Model"
+             xmlns:local="clr-namespace:MauiApp8.Controls"
+
+             Title="FoodDetails"
+             >
+
+
+
     <VerticalStackLayout>
-        <Label 
-            Text="{Binding User.Name}"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
+
+
+
+
+
 
         <Button 
-                Text="Logout"
+                Text="Navigate Back"
                 FontAttributes="Bold"
-                Command="{Binding SignOutCommand}"
+                Command="{Binding NavigateBackCommand}"
                 HorizontalOptions="Center" />
+
+
+
+       
+
     </VerticalStackLayout>
+
 </ContentPage>

@@ -1,8 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using MauiApp8.Model;
-using MauiApp8.Services;
-
+using MauiApp8.Services.Authentication;
 
 namespace MauiApp8.ViewModel
 {

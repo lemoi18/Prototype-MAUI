@@ -55,10 +55,17 @@
 		<PackageReference Include="Google.Apis.Oauth2.v2" Version="1.60.0.1869" />
 		<PackageReference Include="Google.Apis.PeopleService.v1" Version="1.60.0.2924" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
+		<PackageReference Include="Refractored.MvvmHelpers" Version="1.6.2" />
 		<PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.27.0" />
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Update="Views\FoodDetailsPage.xaml.cs">
+	    <DependentUpon>FoodDetailsPage.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Views\FoodItemView.xaml.cs">
+	    <DependentUpon>FoodItemView.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="Views\HomePage.xaml.cs">
 	    <DependentUpon>HomePage.xaml</DependentUpon>
 	  </Compile>
@@ -66,6 +73,12 @@
 
 	<ItemGroup>
 	  <MauiXaml Update="LoginShell.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\FoodDetailsPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\FoodItemView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\FoodPage.xaml">

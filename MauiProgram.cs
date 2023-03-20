@@ -1,7 +1,8 @@
 ﻿using CommunityToolkit.Maui;
 using Google.Apis.Auth.OAuth2;
 using Microsoft.Extensions.Logging;
-
+using MauiApp8.Services.Authentication;
+using MauiApp8.Services.DataServices;
 
 namespace MauiApp8;
 
@@ -27,15 +28,27 @@ public static class MauiProgram
         builder.Services.AddTransient<ViewModel.HomePageModel>();
         builder.Services.AddSingleton<ViewModel.SettingsPageModel>();
         builder.Services.AddSingleton<ViewModel.LoginPageModel>();
-        
+        builder.Services.AddSingleton<ViewModel.FoodPageModel>();
+        builder.Services.AddSingleton<ViewModel.FoodDetailsModel>();
+        builder.Services.AddSingleton<ViewModel.FoodViewModel>();
+
+
         //Views
         builder.Services.AddTransient<Views.HomePage>();
         builder.Services.AddSingleton<Views.LoginPage>();
         builder.Services.AddSingleton<Views.SettingsPage>();
+        builder.Services.AddTransient<Views.FoodPage>();
+        builder.Services.AddTransient<Views.FoodDetailsPage>();
+        builder.Services.AddTransient<Views.FoodItemView>();
+
 
 
         //Services
-        builder.Services.AddSingleton<Services.IAuthenticationService>((e)=> new Services.Authenticated_stub());
+
+
+
+        builder.Services.AddSingleton<Services.Authentication.IAuthenticationService>((e)=> new Services.Authentication.Authenticated_stub());
+        builder.Services.AddSingleton<Services.DataServices.IDataService>((e) => new Services.DataServices.FoodService_stub());
 
 
         var app = builder.Build();

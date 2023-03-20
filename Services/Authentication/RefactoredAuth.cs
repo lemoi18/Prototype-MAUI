@@ -18,12 +18,11 @@ using Microsoft.IdentityModel.Tokens;
 using MauiApp8.Model;
 using System.Text.Json;
 
-
-namespace MauiApp8.Services
+namespace MauiApp8.Services.Authentication
 {
     internal class RefactoredGoogleAuth : ObservableObject, IAuthenticationService
     {
-        
+
 
         public string auth_uri { get; set; }
         public string scheme { get; set; }
@@ -32,7 +31,7 @@ namespace MauiApp8.Services
         public string client_id { get; set; }
         public string auth_url { get; set; }
         public string callback_url { get; set; }
-        
+
 
         public Account User { get; set; }
 
@@ -44,9 +43,9 @@ namespace MauiApp8.Services
             client_id = "438312542461-555tgjs158r5jrj1vmvgfvrlccblg89a.apps.googleusercontent.com";
             auth_uri = "https://accounts.google.com/o/oauth2/auth";
             token_uri = "https://oauth2.googleapis.com/token";
-            auth_url = $"{this.auth_uri}?response_type=code" +
+            auth_url = $"{auth_uri}?response_type=code" +
                 $"&redirect_uri=com.companyname.mauiapp8://" +
-                $"&client_id={this.client_id}" +
+                $"&client_id={client_id}" +
                 $"&scope=https://www.googleapis.com/auth/userinfo.profile" +
                 $"&include_granted_scopes=true" +
                 $"&state=state_parameter_passthrough_value";
@@ -59,8 +58,8 @@ namespace MauiApp8.Services
 
         public async Task<Account> AuthenticateAsync()
         {
-            var authUrl = new Uri($"{this.auth_url}{scheme}");
-            var callbackUrl = new Uri(this.callback_url);
+            var authUrl = new Uri($"{auth_url}{scheme}");
+            var callbackUrl = new Uri(callback_url);
 
             WebAuthenticatorResult result = await WebAuthenticator.Default.AuthenticateAsync(authUrl, callbackUrl);
 
@@ -69,8 +68,8 @@ namespace MauiApp8.Services
             var parameters = new FormUrlEncodedContent(new[]
             {
                 new KeyValuePair<string,string>("grant_type","authorization_code"),
-                new KeyValuePair<string,string>("client_id", this.client_id),
-                new KeyValuePair<string,string>("redirect_uri", this.callback_url),
+                new KeyValuePair<string,string>("client_id", client_id),
+                new KeyValuePair<string,string>("redirect_uri", callback_url),
                 new KeyValuePair<string,string>("code", codeToken),
             });
 
@@ -98,8 +97,8 @@ namespace MauiApp8.Services
 
         public async Task SignOutAsync()
         {
-            this.User = null;
-            
+            User = null;
+
         }
 
         private Account ValidateAccessToken(string accessToken)

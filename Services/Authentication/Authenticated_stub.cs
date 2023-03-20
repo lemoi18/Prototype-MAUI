@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MauiApp8.Services
+namespace MauiApp8.Services.Authentication
 {
     internal class Authenticated_stub : ObservableObject, IAuthenticationService
     {
@@ -44,7 +44,7 @@ namespace MauiApp8.Services
 
         public Task SignOutAsync()
         {
-            return Task.FromResult(this.User = null);
+            return Task.FromResult(User = null);
 
         }
     }

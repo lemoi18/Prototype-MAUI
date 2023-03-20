@@ -4,7 +4,8 @@
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="MauiApp8.Views.LoginPage"
              xmlns:viewmodel="clr-namespace:MauiApp8.ViewModel"
-             x:DataType="viewmodel:LoginPageModel">
+             x:DataType="viewmodel:LoginPageModel"
+             >
 
 
 

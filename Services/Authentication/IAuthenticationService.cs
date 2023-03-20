@@ -1,9 +1,8 @@
 ﻿using MauiApp8.Model;
 
-
-namespace MauiApp8.Services
+namespace MauiApp8.Services.Authentication
 {
-    public interface IAuthenticationService 
+    public interface IAuthenticationService
     {
 
 
