@@ -14,7 +14,6 @@ namespace MauiApp8.ViewModel
 
         
         public Food Food { get; set; }
-
         public string Name => Food?.Name;
 
         public string Carbohydrates => Food?.Carbohydrates;

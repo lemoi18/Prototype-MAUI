@@ -20,10 +20,6 @@
         <ShellContent Title="Food"
                       ContentTemplate="{DataTemplate views:FoodPage}"
                       Route="Food" />
-
-        <ShellContent Title="Test"
-                      ContentTemplate="{DataTemplate views:FoodItemView}"
-                      Route="Test" />
         <ShellContent Title="Settings"
                       ContentTemplate="{DataTemplate views:SettingsPage}"
                       Route="settings" />

@@ -10,6 +10,8 @@ using System.Windows.Input;
 
 namespace MauiApp8.ViewModel
 {
+
+    [QueryProperty(nameof(Food), nameof(Food))]
     public partial class FoodDetailsModel : ObservableObject
     {
 
@@ -24,11 +26,11 @@ namespace MauiApp8.ViewModel
 
         private string _searchText;
         [ObservableProperty]
-        private Account _user;
+         Account _user;
         [ObservableProperty]
-        private Food _food;
+         Food _food;
         [ObservableProperty]
-        private ObservableCollection<Food> _selectedFoods;
+         ObservableCollection<Food> _selectedFoods;
 
 
         public ICommand SearchCommand { get; }

@@ -1,25 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Net.Http;
+﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Authentication;
-using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
-using Google.Apis.Auth;
-using Google.Apis.Auth.OAuth2;
-using Google.Apis.Oauth2.v2;
-using Google.Apis.PeopleService.v1;
-using Google.Apis.PeopleService.v1.Data;
-using Google.Apis.Services;
-using Microsoft.Maui.ApplicationModel.Communication;
-using Microsoft.Maui.Authentication;
-using Microsoft.IdentityModel.Tokens;
 using MauiApp8.Model;
 using System.Text.Json;
 
+
 namespace MauiApp8.Services.Authentication
 {
+
+   
     internal class RefactoredGoogleAuth : ObservableObject, IAuthenticationService
     {
 
@@ -58,10 +47,17 @@ namespace MauiApp8.Services.Authentication
 
         public async Task<Account> AuthenticateAsync()
         {
+
+            
+
+            WebAuthenticatorResult result = null;
+
+
             var authUrl = new Uri($"{auth_url}{scheme}");
             var callbackUrl = new Uri(callback_url);
 
-            WebAuthenticatorResult result = await WebAuthenticator.Default.AuthenticateAsync(authUrl, callbackUrl);
+             result = await WebAuthenticator.AuthenticateAsync(authUrl, callbackUrl);
+
 
 
             var codeToken = result.Properties["code"];

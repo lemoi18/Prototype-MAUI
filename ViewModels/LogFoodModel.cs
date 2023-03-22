@@ -1,42 +1,60 @@
 
-using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using Google.Apis.PeopleService.v1.Data;
+
 using MauiApp8.Model;
 using MauiApp8.Services.Authentication;
 using MauiApp8.Services.DataServices;
-using Microsoft.Maui.Controls;
-using Microsoft.Maui.Controls.Compatibility;
 using MvvmHelpers;
-using System.Collections.ObjectModel;
-using System.Windows.Input;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+
+
 
 namespace MauiApp8.ViewModel
 {
-    public partial class FoodPageModel : CommunityToolkit.Mvvm.ComponentModel.ObservableObject
+    public partial class LogFoodModel : CommunityToolkit.Mvvm.ComponentModel.ObservableObject
     {
         IAuthenticationService authService;
         IDataService dataService;
+        
         private string _searchText;
 
-        [ObservableProperty]
-         Account _User;
 
-        [ObservableProperty]
-        Food _selectedFood;
 
-        [ObservableProperty]
-        MvvmHelpers.ObservableRangeCollection<FoodViewModel> foods;
 
-        // Define the public property for the observable collection
 
-        [ObservableProperty]
-        private ObservableCollection<Food> foodCollection;
 
 
         [ObservableProperty]
-        MvvmHelpers.ObservableRangeCollection<Food> _selectedFoods;
+        Account _User;
 
+        [ObservableProperty]
+        MvvmHelpers.ObservableRangeCollection<FoodViewModel> foodVM;
+        [ObservableProperty]
+        MvvmHelpers.ObservableRangeCollection<Food> foods;
+        //private MvvmHelpers.ObservableRangeCollection<FoodViewModel> foodsVm;
+        //public MvvmHelpers.ObservableRangeCollection<FoodViewModel> FoodCollectionVM
+        //{
+        //    get => foodsVm;
+
+        //    set => SetProperty(ref foodsVm, value);
+        //}
+        //// Define the public property for the observable collection
+
+        //private MvvmHelpers.ObservableRangeCollection<Food> foods;
+        //public MvvmHelpers.ObservableRangeCollection<Food> FoodCollection
+        //{
+        //    get => foods;
+        //    set => SetProperty(ref foods, value);
+        //}
+
+
+
+        //private MvvmHelpers.ObservableRangeCollection<Food> _selectedFoods;
+        //public MvvmHelpers.ObservableRangeCollection<Food> SelectedFood
+        //{
+        //    get => _selectedFoods;
+        //    set=> SetProperty(ref _selectedFoods, value);
+        //}
 
         public string SearchText
         {
@@ -44,23 +62,23 @@ namespace MauiApp8.ViewModel
             set
             {
                 if (SetProperty(ref _searchText, value))
-                {
-                    UpdateSearchResultsAsync(value);
-                }
+                Task.Run(()=> UpdateSearchResultsAsync(value));
+
             }
         }
 
 
 
-        public FoodPageModel(IAuthenticationService authService, IDataService dataService)
+        public LogFoodModel(IAuthenticationService authService, IDataService dataService)
         {
 
             this.authService = authService;
-
+            
            this.dataService = dataService;
-            //foods = new MvvmHelpers.ObservableRangeCollection<FoodViewModel>();
-
-            //LoadFoodsAsync();
+            this.Foods = new MvvmHelpers.ObservableRangeCollection<Food>();
+            this.FoodVM = new MvvmHelpers.ObservableRangeCollection<FoodViewModel>();
+            
+            InitializeAsync();
             //NavigateToFoodDetailsCommand = new RelayCommand<FoodViewModel>(NavigateToFoodDetails);
 
         }
@@ -70,54 +88,93 @@ namespace MauiApp8.ViewModel
         //    var route = $"{nameof(FoodDetailsModel)}?foodId={selectedFoodViewModel.Food.Id}";
         //    await Shell.Current.GoToAsync(route);
         //}
+        private async Task InitializeAsync()
+        {
+            await LoadFoodsAsync();
+            //NavigateToFoodDetailsCommand = new RelayCommand<FoodViewModel>(NavigateToFoodDetails);
+        }
 
+        private async Task LoadFoodsAsync()
+        {
+            var foodService = await dataService.GetFoods();
+            if (foodService == null)
+            {
+                await Shell.Current.DisplayAlert(
+                          "Error",
+                           "An error occurred.",
+                           "Close");
+                return;
+            }
+            Task.Delay(50);
+            Console.WriteLine($"Loaded {foodService.Count} food items from the dataService");
 
-        //private async void LoadFoodsAsync()
-        //{
-        //    var foodService = await dataService.GetFoods();
-        //    foodCollection = new ObservableCollection<Food>(foodService);
+            this.Foods = new ObservableRangeCollection<Food>(foodService);
 
-        //    var list = new List<FoodViewModel>();
-        //    foreach (var food in foodService)
-        //    {
-        //        var foodVM = new FoodViewModel(food);
+            var list = new List<FoodViewModel>();
+            foreach (var food in foodService)
+            {
+                var foodVM = new FoodViewModel(food);
 
-        //        list.Add(foodVM);
-        //    }
-        //    foods.ReplaceRange(list);
-        //}
+                list.Add(foodVM);
+           }
+            Console.WriteLine($"Created {list.Count} FoodViewModel instances");
+
+            this.FoodVM.ReplaceRange(list);
+            Console.WriteLine($"FoodCollectionVM contains {this.FoodVM.Count} items");
+
+        }
 
 
 
         public async Task UpdateSearchResultsAsync(string query)
         {
+            if (this.Foods == null)
+            {
+                Console.WriteLine("FoodCollection is null");
+                return;
+            }
+
+            if (this.FoodVM == null)
+            {
+                Console.WriteLine("FoodCollectionVM is null");
+                return;
+            }
+
             if (string.IsNullOrEmpty(query))
             {
-                foods.ReplaceRange(foodCollection.Select(food => new FoodViewModel(food)));
+                this.FoodVM.ReplaceRange(this.Foods?.Select(food => new FoodViewModel(food)) ?? Enumerable.Empty<FoodViewModel>());
             }
             else
             {
-                var filteredResults = foodCollection.Where(p => p.Name.ToLower().Contains(query.ToLower()));
-                foods.ReplaceRange(filteredResults.Select(food => new FoodViewModel(food)));
+                var filteredResults = this.Foods
+                          .Where(p => !string.IsNullOrEmpty(p.Name) &&
+                                 p.Name.ToLower().Contains(query.ToLower()));
+                this.FoodVM.ReplaceRange(filteredResults.Select(food => new FoodViewModel(food)));
             }
             await Task.CompletedTask;
         }
+
 
         //public ICommand NavigateToFoodDetailsCommand { get; }
 
 
 
-        
-
-        [RelayCommand]
-        public async Task Search(string query) => await UpdateSearchResultsAsync(query);
+        async Task Find(string query) => await UpdateSearchResultsAsync(query);
 
 
         [RelayCommand]
         Task NavigateBack() => Shell.Current.GoToAsync("..");
 
         [RelayCommand]
-        Task AddSelectedFood() => Shell.Current.GoToAsync("..");
+        async Task AddSelectedFood(string query) => await UpdateSearchResultsAsync(query);
+
+        //[RelayCommand]
+        //Task NavigateToDetail() => Shell.Current.GoToAsync($"{nameof(FoodDetailsModel)}?Id={SelectedFoods]}",
+        //    new Dictionary<string,object>
+        //    (
+        //       ["Food"]= SelectedFoods
+                
+        //    );
 
     }
 }

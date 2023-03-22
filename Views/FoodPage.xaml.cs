@@ -4,7 +4,7 @@ namespace MauiApp8.Views;
 
 public partial class FoodPage : ContentPage
 {
-    public FoodPage(FoodPageModel vm)
+    public FoodPage(LogFoodModel vm)
     {
         InitializeComponent();
 
@@ -15,21 +15,21 @@ public partial class FoodPage : ContentPage
 
     private async void OnSearchTextChanged(object sender, TextChangedEventArgs e)
     {
-        var viewModel = BindingContext as FoodPageModel;
+        var viewModel = BindingContext as LogFoodModel;
         await viewModel.UpdateSearchResultsAsync(e.NewTextValue);
     }
 
     void ListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
     {
-        if (e.SelectedItem is Food selectedFood)
+        if (e.SelectedItem is Food _selectedFoods)
         {
             // Add the selected food to the collection
-            var viewModel = BindingContext as FoodPageModel;
+            var viewModel = BindingContext as LogFoodModel;
 
             //viewModel.SelectedFoods.Add(selectedFood);
 
             // Clear the selection
-            ((ListView)sender).SelectedItem = null;
+            ((CollectionView)sender).SelectedItem = null;
         }
     }
 

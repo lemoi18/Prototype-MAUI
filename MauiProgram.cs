@@ -28,7 +28,7 @@ public static class MauiProgram
         builder.Services.AddTransient<ViewModel.HomePageModel>();
         builder.Services.AddSingleton<ViewModel.SettingsPageModel>();
         builder.Services.AddSingleton<ViewModel.LoginPageModel>();
-        builder.Services.AddSingleton<ViewModel.FoodPageModel>();
+        builder.Services.AddSingleton<ViewModel.LogFoodModel>();
         builder.Services.AddSingleton<ViewModel.FoodDetailsModel>();
         builder.Services.AddSingleton<ViewModel.FoodViewModel>();
 
@@ -47,7 +47,7 @@ public static class MauiProgram
 
 
 
-        builder.Services.AddSingleton<Services.Authentication.IAuthenticationService>((e)=> new Services.Authentication.Authenticated_stub());
+        builder.Services.AddSingleton<Services.Authentication.IAuthenticationService>((e)=> new Services.Authentication.RefactoredGoogleAuth());
         builder.Services.AddSingleton<Services.DataServices.IDataService>((e) => new Services.DataServices.FoodService_stub());
 
 

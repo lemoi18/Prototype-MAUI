@@ -5,14 +5,15 @@ namespace MauiApp8.Views;
 
 public partial class FoodDetailsPage : ContentPage
 {
-    public FoodDetailsPage(Food food, FoodDetailsModel vm)
+
+
+    public FoodDetailsPage(FoodDetailsModel vm)
     {
         InitializeComponent();
 
         BindingContext = vm;
 
     }
-
 
 
 }

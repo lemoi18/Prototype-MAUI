@@ -2,50 +2,43 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-             
+             x:Name="this"
+             xmlns:models="clr-namespace:MauiApp8.Model"
              x:Class="MauiApp8.Views.FoodPage"
              xmlns:viewmodel="clr-namespace:MauiApp8.ViewModel"
-             x:DataType="viewmodel:FoodPageModel"
+             x:DataType="viewmodel:LogFoodModel"
              xmlns:view="clr-namespace:MauiApp8.Views"
-
-             
 
              >
 
-    <ContentPage.Content>
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
-            <SearchBar Grid.Row="0"
+
+
+    <StackLayout>
+    <SearchBar 
                        Placeholder="Search"
                        Text="{Binding SearchText}"
-                       SearchCommand="{Binding SearchCommand}"
+                       SearchCommand="{Binding AddSelectedFoodCommand}"
                        SearchCommandParameter="{Binding SearchText}" />
-            <CollectionView Grid.Row="1"
-                            x:Name="FoodsCollectionView"
-                            ItemsSource="{Binding Foods}"
-                            SelectedItem="{Binding SelectedFood, Mode=TwoWay}"
-                            SelectionMode="Single"
-                            IsGrouped="True">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="viewmodel:FoodViewModel">
-                        <view:FoodItemView FoodItem="{Binding .}"/>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-                <CollectionView.GroupHeaderTemplate>
-                    <DataTemplate x:DataType="viewmodel:FoodViewModel">
-                        <Grid Padding="10" BackgroundColor="LightGray">
-                            <Label Text="{Binding Name}"
-                                   FontSize="Large"
-                                   FontAttributes="Bold"
-                                   TextColor="Black"/>
-                        </Grid>
-                    </DataTemplate>
-                </CollectionView.GroupHeaderTemplate>
-            </CollectionView>
-        </Grid>
-    </ContentPage.Content>
+
+        <ListView ItemsSource="{Binding FoodVM}"
+          SelectionMode="None">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+
+                        <view:FoodItemView FoodItem="{Binding .}">
+                            
+                        </view:FoodItemView>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </StackLayout>
+
+
+
+    
+
 
 </ContentPage>
+
