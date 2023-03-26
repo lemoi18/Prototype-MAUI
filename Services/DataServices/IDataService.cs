@@ -12,6 +12,6 @@ namespace MauiApp8.Services.DataServices
     {
         Task<List<Food>> GetFoods();
         Task UpdateDetails(string newDetails, string FoodId);
-
+        Task<Food> GetFoodById(int id);
     }
 }

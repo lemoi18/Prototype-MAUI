@@ -9,30 +9,106 @@
              x:DataType="viewmodel:LogFoodModel"
              xmlns:view="clr-namespace:MauiApp8.Views"
 
-             >
+    >
 
 
 
     <StackLayout>
-    <SearchBar 
-                       Placeholder="Search"
-                       Text="{Binding SearchText}"
-                       SearchCommand="{Binding AddSelectedFoodCommand}"
-                       SearchCommandParameter="{Binding SearchText}" />
 
-        <ListView ItemsSource="{Binding FoodVM}"
-          SelectionMode="None">
+       
+
+
+        <SearchBar 
+     Placeholder="Search"
+     Text="{Binding SearchText}"
+     SearchCommand="{Binding FindCommand}"
+     SearchCommandParameter="{Binding SearchText}"
+     HorizontalOptions="FillAndExpand"/>
+
+        <CollectionView ItemsSource="{Binding FoodVM}" SelectionMode="Single">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="viewmodel:FoodViewModel">
+                    <Frame 
+                        BorderColor="#E0E0E0" 
+                        CornerRadius="8" 
+                        Padding="10" 
+                        HasShadow="True"
+                        Margin="8"
+                        
+                        >
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding Path=NavigateToDetailsCommand, Source={RelativeSource AncestorType={x:Type viewmodel:FoodViewModel}}}"
+                                  CommandParameter="{Binding .}"
+                                  NumberOfTapsRequired="1"/>
+                            </Grid.GestureRecognizers>
+
+                            <StackLayout Orientation="Vertical" Spacing="5">
+                                <Label Text="{Binding Name}" 
+                               FontSize="Large" 
+                               FontAttributes="Bold" 
+                               TextColor="#212121" />
+                                <Label Text="{Binding Carbohydrates}" 
+                               FontSize="Medium" 
+                               FontAttributes="Bold" 
+                               TextColor="#424242" />
+                                <Label Text="{Binding Category}" 
+                               FontSize="Medium" 
+                               Opacity="0.7" 
+                               TextColor="#616161" />
+                            </StackLayout>
+
+                        </Grid>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+
+        
+
+        <!--<ListView ItemsSource="{Binding SelectedFoodsVM}"
+          SelectionMode="None"
+          HorizontalOptions="FillAndExpand" >
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
 
                         <view:FoodItemView FoodItem="{Binding .}">
-                            
+
                         </view:FoodItemView>
                     </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>
-        </ListView>
+        </ListView>-->
+
+        <CollectionView ItemsSource="{Binding SelectedFoodsVM}"
+                SelectionMode="None"
+                HorizontalOptions="FillAndExpand">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="viewmodel:FoodViewModel">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <StackLayout Grid.Column="0">
+                            <Label Text="{Binding Name}" />
+                        </StackLayout>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
     </StackLayout>
 
 

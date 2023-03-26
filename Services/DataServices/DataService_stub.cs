@@ -82,9 +82,10 @@ namespace MauiApp8.Services.DataServices
 
         }
 
-
-
-
-
+        public Task<Food> GetFoodById(int id)
+        {
+            Food food = _mockFoods.FirstOrDefault(food => food.Id == id);
+            return Task.FromResult(food);
+        }
     }
 }

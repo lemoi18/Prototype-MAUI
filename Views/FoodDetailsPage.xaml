@@ -7,29 +7,59 @@
              x:DataType="viewmodel:FoodDetailsModel"
              xmlns:model="clr-namespace:MauiApp8.Model"
              xmlns:local="clr-namespace:MauiApp8.Controls"
-
-             Title="FoodDetails"
+             Title="{Binding Food.Name}"
              >
 
 
 
-    <VerticalStackLayout>
 
 
 
 
 
 
-        <Button 
-                Text="Navigate Back"
-                FontAttributes="Bold"
-                Command="{Binding NavigateBackCommand}"
-                HorizontalOptions="Center" />
+    <VerticalStackLayout Spacing="15" Padding="15">
 
+        <Frame BackgroundColor="White"
+               CornerRadius="10"
+               HasShadow="True"
+               Padding="20"
+               HorizontalOptions="FillAndExpand">
 
+            <StackLayout Spacing="15">
 
-       
+                <Label Text="{Binding Food.Carbohydrates, StringFormat='Carbohydrates : {0} '}"
+                       FontSize="18"
+                       FontAttributes="Bold"
+                       TextColor="#2D2D2D"/>
+
+                <Label Text="{Binding Food.Category}"
+                       FontSize="16"
+                       TextColor="DarkGray"/>
+
+                <Label Text="{Binding Food.Description}"
+                       FontSize="14"
+                       TextColor="Gray"/>
+
+            </StackLayout>
+
+        </Frame>
+
+        <Entry x:Name="gramsEntry"
+               Placeholder="Enter grams of food"
+               FontSize="14"
+               TextColor="Black"
+               PlaceholderColor="Gray"
+               BackgroundColor="White"
+               Keyboard="Numeric"
+               VerticalOptions="CenterAndExpand"
+               HorizontalOptions="FillAndExpand"
+               WidthRequest="250"
+               />
+
 
     </VerticalStackLayout>
+
+
 
 </ContentPage>

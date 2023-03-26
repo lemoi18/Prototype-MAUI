@@ -37,18 +37,19 @@ public static class MauiProgram
         builder.Services.AddTransient<Views.HomePage>();
         builder.Services.AddSingleton<Views.LoginPage>();
         builder.Services.AddSingleton<Views.SettingsPage>();
-        builder.Services.AddTransient<Views.FoodPage>();
-        builder.Services.AddTransient<Views.FoodDetailsPage>();
+        builder.Services.AddSingleton<Views.FoodPage>();
+        builder.Services.AddSingleton<Views.FoodDetailsPage>();
         builder.Services.AddTransient<Views.FoodItemView>();
 
+        builder.Services.AddTransient<Model.Food>();
 
 
         //Services
 
 
 
-        builder.Services.AddSingleton<Services.Authentication.IAuthenticationService>((e)=> new Services.Authentication.RefactoredGoogleAuth());
-        builder.Services.AddSingleton<Services.DataServices.IDataService>((e) => new Services.DataServices.FoodService_stub());
+        builder.Services.AddSingleton<Services.Authentication.IAuthenticationService>((e)=> new Services.Authentication.Authenticated_stub());
+        builder.Services.AddTransient<Services.DataServices.IDataService>((e) => new Services.DataServices.FoodService_stub());
 
 
         var app = builder.Build();

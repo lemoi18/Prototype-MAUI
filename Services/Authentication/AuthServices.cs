@@ -138,7 +138,7 @@ namespace MauiApp8.Services.Authentication
 
                     var data = await accessTokenResponse.Content.ReadAsStringAsync();
                     loginResponse = JsonSerializer.Deserialize<LoginRespons>(data);
-                    return await GetUserInfo(loginResponse.id_token);
+                    return await Task.Run(()=>GetUserInfo(loginResponse.id_token));
                 }
                 else
                 {

@@ -18,7 +18,31 @@ public partial class FoodItemView : ContentView
         InitializeComponent();
     }
 
+    //async void ListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
+    //{
+    //    if (e.SelectedItem is FoodViewModel _selectedFoods)
+    //    {
+    //        // Add the selected food to the collection
+    //        var viewModel = BindingContext as LogFoodModel;
 
+    //        viewModel.SelectedFoodsVM.Add(_selectedFoods);
+
+    //        await Navigation.PushAsync(new FoodDetailsPage(_selectedFoods));
+
+    //        // Clear the selection
+    //        ((ListView)sender).SelectedItem = null;
+    //    }
+    //}
+
+    private async void ListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
+    {
+        if (e.SelectedItem == null)
+            return;
+
+        // Handle the selected item here
+
+        ((ListView)sender).SelectedItem = null; // Clear the selection
+    }
 
 
 }

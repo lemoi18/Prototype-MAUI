@@ -15,6 +15,11 @@ namespace MauiApp8.Services.DataServices
         HttpClient httpClient;
         HttpClient Client => httpClient ?? (httpClient = new HttpClient());
 
+        public Task<Food> GetFoodById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<List<Food>> GetFoods()
         {
             //var json = await Client.GetStringAsync("https://montemagno.com/monkeys.json");
