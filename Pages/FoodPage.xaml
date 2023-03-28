@@ -23,7 +23,8 @@
      Text="{Binding SearchText}"
      SearchCommand="{Binding FindCommand}"
      SearchCommandParameter="{Binding SearchText}"
-     HorizontalOptions="FillAndExpand"/>
+     HorizontalOptions="FillAndExpand"
+            />
 
         <CollectionView ItemsSource="{Binding FoodVM}" SelectionMode="Single">
             <CollectionView.ItemTemplate>
@@ -93,18 +94,46 @@
 
         <CollectionView ItemsSource="{Binding SelectedFoodsVM}"
                 SelectionMode="None"
-                HorizontalOptions="FillAndExpand">
+                HorizontalOptions="FillAndExpand"
+                        EmptyView="No Foods to log">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="viewmodel:FoodViewModel">
                     <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
-                        <StackLayout Grid.Column="0">
-                            <Label Text="{Binding Name}" />
-                        </StackLayout>
+
+
+
+                        <SwipeView Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="1">
+                            <SwipeView.RightItems>
+                                <SwipeItems>
+                                    <SwipeItem   Text="Delete" BackgroundColor="Red" Command="{Binding DeleteCommand}" />
+                                    <SwipeItem Text="Edit" BackgroundColor="Orange" Command="{Binding EditCommand}" />
+                                </SwipeItems>
+                            </SwipeView.RightItems>
+
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+
+                                <StackLayout Grid.Column="0">
+                                    <Label Text="{Binding Name}" />
+                                    <Label Text="{Binding Carbohydrates, StringFormat='Carbohydrates : {0} '}" />
+                                    <Label Text="{Binding Grams, StringFormat='Amount : {0}g '}" />
+                                </StackLayout>
+                            </Grid>
+                        </SwipeView>
                     </Grid>
+
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>

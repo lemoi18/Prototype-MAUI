@@ -20,7 +20,11 @@ public partial class FoodDetailsPage : ContentPage
         base.OnNavigatedTo(args);
     }
 
-   
-   
+    private void OnEntryCompleted(object sender, EventArgs e)
+    {
+        // Remove the focus from the Entry control
+        ((Entry)sender).Unfocus();
+    }
+
 
 }

@@ -24,6 +24,9 @@ namespace MauiApp8.ViewModel
 
         public string Description => Food?.Description;
 
+        [ObservableProperty]
+        double grams;
+
         public FoodViewModel(Food food)
         {
             Food = food;

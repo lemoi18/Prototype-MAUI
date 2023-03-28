@@ -60,13 +60,13 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Update="Views\FoodDetailsPage.xaml.cs">
+	  <Compile Update="Pages\FoodDetailsPage.xaml.cs">
 	    <DependentUpon>FoodDetailsPage.xaml</DependentUpon>
 	  </Compile>
 	  <Compile Update="Views\FoodItemView.xaml.cs">
 	    <DependentUpon>FoodItemView.xaml</DependentUpon>
 	  </Compile>
-	  <Compile Update="Views\HomePage.xaml.cs">
+	  <Compile Update="Pages\HomePage.xaml.cs">
 	    <DependentUpon>HomePage.xaml</DependentUpon>
 	  </Compile>
 	</ItemGroup>
@@ -75,22 +75,22 @@
 	  <MauiXaml Update="LoginShell.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\FoodDetailsPage.xaml">
+	  <MauiXaml Update="Pages\FoodDetailsPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\FoodItemView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\FoodPage.xaml">
+	  <MauiXaml Update="Pages\FoodPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\HomePage.xaml">
+	  <MauiXaml Update="Pages\HomePage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\LoginPage.xaml">
+	  <MauiXaml Update="Pages\LoginPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\SettingsPage.xaml">
+	  <MauiXaml Update="Pages\SettingsPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>

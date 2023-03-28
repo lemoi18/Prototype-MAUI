@@ -1,14 +1,11 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Maui.Core.Extensions;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Google.Apis.PeopleService.v1.Data;
 using MauiApp8.Model;
-using MauiApp8.Services.Authentication;
 using MauiApp8.Services.DataServices;
 using MauiApp8.Views;
-using Microsoft.Maui.Controls.Compatibility;
-using System.Collections.Generic;
+
 using System.Collections.ObjectModel;
-using System.Windows.Input;
 
 namespace MauiApp8.ViewModel
 {
@@ -20,7 +17,11 @@ namespace MauiApp8.ViewModel
 
         [ObservableProperty]
         Food food;
-    
+
+
+        [ObservableProperty]
+        string entry;
+
         [ObservableProperty]
         double grams;
 
@@ -42,24 +43,47 @@ namespace MauiApp8.ViewModel
         async Task NavigateToBackLog()
         {
 
+            // Check if the grams value is valid
+            if (Grams.IsZeroOrNaN())
+            {
+                // Display an alert if the grams value is not valid
+                await Shell.Current.DisplayAlert("Error", "Please enter a valid value for grams.", "OK");
+                return;
+            }
 
-            var list = new List<FoodViewModel>();
-            
-            
-                var foodVM = new FoodViewModel(Food);
-                
-    
-                            
+            // Create a new FoodViewModel object with the selected food and the grams value
+            var foodVM = new FoodViewModel(Food) { Grams = Grams };
 
 
+            if (LogFood.SelectedFoodsVM == null)
+            {
+                LogFood.SelectedFoodsVM = new MvvmHelpers.ObservableRangeCollection<FoodViewModel>();
+            }
+
+            // Add the new FoodViewModel object to the SelectedFoodsVM collection
+            LogFood.SelectedFoodsVM.Add(foodVM);
+
+            // Navigate to the FoodPage
             await Shell.Current.GoToAsync($"{nameof(FoodPage)}");
+
+            // Clear the grams value
+            ClearGrams();
+        }
+
+        public void ClearGrams()
+        {
+            Grams = 0;
         }
 
 
-
-
         [RelayCommand]
-        Task NavigateBack() => Shell.Current.GoToAsync("..");
+        async Task NavigateBack()
+        {
+            
+            await Shell.Current.GoToAsync("..");
+            ClearGrams();
+
+        }
 
         [RelayCommand]
         Task AddSelectedFood() => Shell.Current.GoToAsync("..");

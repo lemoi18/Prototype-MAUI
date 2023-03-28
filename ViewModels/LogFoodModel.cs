@@ -8,11 +8,14 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using MauiApp8.Views;
 using System.Collections.ObjectModel;
+using System.Runtime.InteropServices;
 
 namespace MauiApp8.ViewModel
 {
 
     [QueryProperty(nameof(Food), nameof(Food))]
+    [QueryProperty(nameof(Grams), nameof(Grams))]
+
 
     public partial class LogFoodModel : CommunityToolkit.Mvvm.ComponentModel.ObservableObject
     {
@@ -22,6 +25,8 @@ namespace MauiApp8.ViewModel
         private string _searchText;
 
 
+        [ObservableProperty]
+        double grams;
 
 
 
@@ -65,7 +70,7 @@ namespace MauiApp8.ViewModel
            this.dataService = dataService;
             this.Foods = new MvvmHelpers.ObservableRangeCollection<Food>();
             this.FoodVM = new MvvmHelpers.ObservableRangeCollection<FoodViewModel>();
-            
+            this.selectedFoodsVM= new MvvmHelpers.ObservableRangeCollection<FoodViewModel>();
             InitializeAsync();
             //NavigateToFoodDetailsCommand = new RelayCommand<FoodViewModel>(NavigateToFoodDetails);
 
@@ -111,6 +116,8 @@ namespace MauiApp8.ViewModel
             Console.WriteLine($"FoodCollectionVM contains {this.FoodVM.Count} items");
 
         }
+
+
 
 
 
@@ -192,32 +199,32 @@ namespace MauiApp8.ViewModel
         //public ICommand NavigateToFoodDetailsCommand { get; }
 
 
-
-
         [RelayCommand]
 
         async Task Find(string query) => await UpdateSearchResultsAsync(query);
 
 
 
-       
+
         [RelayCommand]
-        public async Task SelectedFoodGetter(FoodViewModel food)
+         Task RemoveFoodFromList(FoodViewModel foodView)
         {
-            Console.WriteLine($"Food {food.Name}"); 
+            SelectedFoodsVM.Remove(foodView);
+            return  Task.CompletedTask;
+
         }
-
-
         [RelayCommand]
-        async Task AddSelectedFood(string query) => await UpdateSearchResultsAsync(query);
+        async Task EditFoodFromList(FoodViewModel foodView)
+        {
 
-        //[RelayCommand]
-        //Task NavigateToDetail() => Shell.Current.GoToAsync($"{nameof(FoodDetailsModel)}?Id={SelectedFoods]}",
-        //    new Dictionary<string,object>
-        //    (
-        //       ["Food"]= SelectedFoods
+
                 
-        //    );
+
+                await Shell.Current.GoToAsync($"{nameof(FoodDetailsPage)}");
+
+
+
+        }
 
     }
 }
