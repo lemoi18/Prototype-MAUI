@@ -18,6 +18,7 @@ namespace MauiApp8.ViewModel
         public Food Food { get; set; }
         public string Name => Food?.Name;
 
+        public int  ID => Food?.Id ?? -1;
         public string Carbohydrates => Food?.Carbohydrates;
 
         public string Category => Food?.Category;
@@ -26,6 +27,12 @@ namespace MauiApp8.ViewModel
 
         [ObservableProperty]
         double grams;
+
+        [ObservableProperty]
+        bool isEdit;
+
+     
+
 
         public FoodViewModel(Food food)
         {

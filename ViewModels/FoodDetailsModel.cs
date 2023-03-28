@@ -11,6 +11,9 @@ namespace MauiApp8.ViewModel
 {
     [QueryProperty(nameof(Food), nameof(Food))]
 
+    [QueryProperty(nameof(IsEdit), nameof(IsEdit))]
+  
+
     public partial class FoodDetailsModel : ObservableObject
     {
         IDataService dataService;
@@ -28,13 +31,19 @@ namespace MauiApp8.ViewModel
         [ObservableProperty]
         LogFoodModel logFood;
 
+        [ObservableProperty]
+        bool isEdit;
+
+        [ObservableProperty]
+        int index;
+
         public FoodDetailsModel(IDataService dataService, LogFoodModel logFoodModel)
         {
         
             this.dataService = dataService;
             
             this.logFood = logFoodModel;
-
+            IsEdit = IsEdit;
         }
 
 
@@ -55,13 +64,26 @@ namespace MauiApp8.ViewModel
             var foodVM = new FoodViewModel(Food) { Grams = Grams };
 
 
-            if (LogFood.SelectedFoodsVM == null)
+            if (IsEdit == true)
             {
-                LogFood.SelectedFoodsVM = new MvvmHelpers.ObservableRangeCollection<FoodViewModel>();
-            }
+                var foodToUpdate = LogFood.SelectedFoodsVM.FirstOrDefault(f => f.ID == foodVM.ID);
+                if (foodToUpdate != null)
+                {
+                    foodToUpdate.Grams = foodVM.Grams;
+                }
 
-            // Add the new FoodViewModel object to the SelectedFoodsVM collection
-            LogFood.SelectedFoodsVM.Add(foodVM);
+            }
+            else
+            {
+
+                if (LogFood.SelectedFoodsVM == null)
+                {
+                    LogFood.SelectedFoodsVM = new MvvmHelpers.ObservableRangeCollection<FoodViewModel>();
+                }
+
+                // Add the new FoodViewModel object to the SelectedFoodsVM collection
+                LogFood.SelectedFoodsVM.Add(foodVM);
+            }
 
             // Navigate to the FoodPage
             await Shell.Current.GoToAsync($"{nameof(FoodPage)}");

@@ -217,12 +217,18 @@ namespace MauiApp8.ViewModel
         async Task EditFoodFromList(FoodViewModel foodView)
         {
 
+            
+            
+                var parameters = new Dictionary<string, object>();
 
-                
+                if (!parameters.ContainsKey("Food"))
+                {
+                    parameters.Add("Food", foodView.Food);
+                }
 
-                await Shell.Current.GoToAsync($"{nameof(FoodDetailsPage)}");
-
-
+                foodView.IsEdit = true;
+                await Shell.Current.GoToAsync($"{nameof(FoodDetailsPage)}?IsEdit={foodView.IsEdit}", parameters);
+            
 
         }
 

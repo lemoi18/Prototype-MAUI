@@ -114,8 +114,14 @@
                         <SwipeView Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="1">
                             <SwipeView.RightItems>
                                 <SwipeItems>
-                                    <SwipeItem   Text="Delete" BackgroundColor="Red" Command="{Binding DeleteCommand}" />
-                                    <SwipeItem Text="Edit" BackgroundColor="Orange" Command="{Binding EditCommand}" />
+                                    <SwipeItem Text="Delete" 
+                                               BackgroundColor="Red" 
+                                               Command="{Binding Path=RemoveFoodFromListCommand, Source={RelativeSource AncestorType={x:Type viewmodel:LogFoodModel}}}"
+                                               CommandParameter="{Binding .}"/>
+                                    <SwipeItem Text="Edit"
+                                               BackgroundColor="Orange"
+                                               Command="{Binding Path=EditFoodFromListCommand, Source={RelativeSource AncestorType={x:Type viewmodel:LogFoodModel}}}"
+                                               CommandParameter="{Binding .}"/>
                                 </SwipeItems>
                             </SwipeView.RightItems>
 
