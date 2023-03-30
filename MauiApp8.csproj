@@ -60,6 +60,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <ProjectReference Include="..\CreateDBLib\CreateDBLib.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <Compile Update="Pages\FoodDetailsPage.xaml.cs">
 	    <DependentUpon>FoodDetailsPage.xaml</DependentUpon>
 	  </Compile>
